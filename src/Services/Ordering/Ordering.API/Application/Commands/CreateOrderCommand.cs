@@ -15,7 +15,7 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands
     // http://cqrs.nu/Faq
     // https://docs.spine3.org/motivation/immutability.html 
     // http://blog.gauffin.org/2012/06/griffin-container-introducing-command-support/
-    // https://msdn.microsoft.com/en-us/library/bb383979.aspx
+    // https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/how-to-implement-a-lightweight-class-with-auto-implemented-properties
 
     [DataContract]
     public class CreateOrderCommand
@@ -26,6 +26,9 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands
 
         [DataMember]
         public string UserId { get; private set; }
+
+        [DataMember]
+        public string UserName { get; private set; }
 
         [DataMember]
         public string City { get; private set; }
@@ -65,12 +68,13 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands
             _orderItems = new List<OrderItemDTO>();
         }
 
-        public CreateOrderCommand(List<BasketItem> basketItems, string userId, string city, string street, string state, string country, string zipcode,
+        public CreateOrderCommand(List<BasketItem> basketItems, string userId, string userName, string city, string street, string state, string country, string zipcode,
             string cardNumber, string cardHolderName, DateTime cardExpiration,
             string cardSecurityNumber, int cardTypeId) : this()
         {
             _orderItems = basketItems.ToOrderItemsDTO().ToList();
             UserId = userId;
+            UserName = userName;
             City = city;
             Street = street;
             State = state;
